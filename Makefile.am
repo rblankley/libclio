@@ -1,0 +1,5 @@
+# DOXYGEN SUPPORT
+@DX_RULES@
+
+SUBDIRS = src
+
