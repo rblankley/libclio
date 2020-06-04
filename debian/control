@@ -1,0 +1,13 @@
+Source: libclio
+Section: libs
+Priority: optional
+Maintainer: Randy Blankley <rblankley@woh.rr.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+
+Package: libclio
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A lightweight c++ logging library.
+

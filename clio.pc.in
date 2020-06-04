@@ -1,0 +1,14 @@
+# libclio pkg-config source file
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: clio
+Description: A lightweight c++ logging library.
+Version: @VERSION@
+Conflicts:
+Libs: -L${libdir} -lclio -pthread
+Cflags: -I${includedir}/clio
+

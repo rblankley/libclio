@@ -84,6 +84,7 @@ AC_CHECK_FUNCS(stat)
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
+	clio.pc
 ])
 
 AC_OUTPUT
