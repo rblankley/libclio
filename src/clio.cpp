@@ -29,6 +29,10 @@
 #include "clio.h"
 #include "loggermanager.h"
 
+#if _WIN32
+static constexpr const char *PACKAGE_VERSION = "1.0.0";
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 bool clioInit( const std::string& filename )
 {
@@ -41,7 +45,7 @@ unsigned int clioGetRefeshInterval()
     const std::chrono::milliseconds interval(
         std::chrono::duration_cast<std::chrono::milliseconds>( clio::loggerManager::instance()->refreshInterval() ) );
 
-    return interval.count();
+    return (unsigned int) interval.count();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

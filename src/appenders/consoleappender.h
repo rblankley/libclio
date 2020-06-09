@@ -25,7 +25,7 @@
 #ifndef CONSOLEAPPENDER_H
 #define CONSOLEAPPENDER_H
 
-#include <appender.h>
+#include "../appender.h"
 
 /// Clio namespace.
 namespace clio

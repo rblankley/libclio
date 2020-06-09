@@ -25,7 +25,7 @@
 #ifndef FILEAPPENDER_H
 #define FILEAPPENDER_H
 
-#include <appender.h>
+#include "../appender.h"
 
 #include <fstream>
 

@@ -78,6 +78,8 @@ AC_CHECK_HEADERS([thread])
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
+AC_CHECK_FUNCS(localtime)
+AC_CHECK_FUNCS(localtime_r)
 AC_CHECK_FUNCS(stat)
 
 # creating top level and subdirectory Makefiles:

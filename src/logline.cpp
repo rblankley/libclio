@@ -144,14 +144,14 @@ void logLine::appendTextHex( const void *buffer, unsigned int bufferLen, unsigne
                     readable.clear();
                 }
 
-                std::sprintf( temp, "    %08X ", i );
+                std::snprintf( temp, sizeof(temp), "    %08X ", i );
                 os << temp;
             }
 
-            std::sprintf( temp, "%02X ", bufferPtr[i] );
+            std::snprintf( temp, sizeof(temp), "%02X ", bufferPtr[i] );
             os << temp;
 
-            std::sprintf( temp, "%c", (' ' <= bufferPtr[i] && bufferPtr[i] <= '~') ? bufferPtr[i] : '.' );
+            std::snprintf( temp, sizeof(temp), "%c", (' ' <= bufferPtr[i] && bufferPtr[i] <= '~') ? bufferPtr[i] : '.' );
             readable.append( temp );
 
             if ( i == (bufferLen-1) )
@@ -285,7 +285,7 @@ void logLine::appendTextV( const char *format, std::va_list params )
     char *temp( nullptr );
 
     // determine how much space to reserve/allocate for string
-    int reserveSize( std::vsprintf( temp, format, params ) );
+    int reserveSize( std::vsnprintf( temp, 0, format, params ) );
 
     if ( 0 < reserveSize )
     {
@@ -293,7 +293,7 @@ void logLine::appendTextV( const char *format, std::va_list params )
         temp = new char[reserveSize];
 
         // format string
-        std::vsprintf( temp, format, params );
+        std::vsnprintf( temp, reserveSize, format, params );
         text_.append( temp );
 
         // cleanup

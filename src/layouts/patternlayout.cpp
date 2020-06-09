@@ -28,7 +28,7 @@
 
 #include "patternlayout.h"
 
-#include <logline.h>
+#include "../logline.h"
 
 #include <cstdio>
 #include <ctime>
@@ -136,65 +136,71 @@ std::string patternLayout::format( const logLine& line ) const
                 }
 
                 char milliseconds[32];
-                std::sprintf( milliseconds, "%03d", (int) std::chrono::duration_cast<std::chrono::milliseconds>( line.timeStamp() - rounded ).count() );
+                std::snprintf( milliseconds, sizeof(milliseconds), "%03d", (int) std::chrono::duration_cast<std::chrono::milliseconds>( line.timeStamp() - rounded ).count() );
 
                 // replace
                 format.replace( pos, 2, milliseconds );
             }
 
             // format time
-            const tm *stamp( std::localtime( &temp ) );
-            std::strftime( value, sizeof( value ), format.c_str(), stamp );
+            tm stamp;
+#if _WIN32
+            ::localtime_s( &stamp, &temp );
+#else
+            ::localtime_r( &temp, &stamp );
+#endif
+
+            std::strftime( value, sizeof( value ), format.c_str(), &stamp );
         }
 
         else if ( std::string::npos != name.find( "%epochms" ) )
         {
             const std::chrono::milliseconds epoch( std::chrono::duration_cast<std::chrono::milliseconds>( line.timeStamp().time_since_epoch() ) );
-            std::sprintf( value, format.c_str(), epoch.count() );
+            std::snprintf( value, sizeof(value), format.c_str(), epoch.count() );
         }
 
         else if ( std::string::npos != name.find( "%epoch" ) )
         {
             const std::chrono::seconds epoch( std::chrono::duration_cast<std::chrono::seconds>( line.timeStamp().time_since_epoch() ) );
-            std::sprintf( value, format.c_str(), epoch.count() );
+            std::snprintf( value, sizeof(value), format.c_str(), epoch.count() );
         }
 
         else if ( std::string::npos != name.find( "%thread" ) )
-            std::sprintf( value, format.c_str(), line.threadId() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.threadId() );
 
         else if ( std::string::npos != name.find( "%levelnum" ) )
-            std::sprintf( value, format.c_str(), line.level() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.level() );
 
         else if ( std::string::npos != name.find( "%level" ) )
         {
             std::string temp( logLevel::toString( line.level() ) );
-            std::sprintf( value, format.c_str(), temp.c_str() );
+            std::snprintf( value, sizeof(value), format.c_str(), temp.c_str() );
         }
 
         else if ( std::string::npos != name.find( "%module" ) )
-            std::sprintf( value, format.c_str(), line.moduleName().c_str() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.moduleName().c_str() );
 
         else if ( std::string::npos != name.find( "%class" ) )
-            std::sprintf( value, format.c_str(), line.className().c_str() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.className().c_str() );
 
         else if ( std::string::npos != name.find( "%method" ) )
-            std::sprintf( value, format.c_str(), line.classFunction().c_str() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.classFunction().c_str() );
 
         else if ( std::string::npos != name.find( "%message" ) )
-            std::sprintf( value, format.c_str(), line.text().c_str() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.text().c_str() );
 
         else if ( std::string::npos != name.find( "%file" ) )
-            std::sprintf( value, format.c_str(), line.sourceFilename().c_str() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.sourceFilename().c_str() );
 
         else if ( std::string::npos != name.find( "%linenum" ) )
-            std::sprintf( value, format.c_str(), line.sourceLine() );
+            std::snprintf( value, sizeof(value), format.c_str(), line.sourceLine() );
 
         else if ( std::string::npos != name.find( "%newline" ) )
         {
             std::stringstream temp;
             temp << std::endl;
 
-            std::sprintf( value, format.c_str(), temp.str().c_str() );
+            std::snprintf( value, sizeof(value), format.c_str(), temp.str().c_str() );
         }
 
         // replace format with formatted string
@@ -242,7 +248,7 @@ bool patternLayout::findFormat( const std::string& line, std::string& name, std:
             }
         }
     }
-    catch ( const std::out_of_range& ex )
+    catch ( const std::out_of_range& /*ex*/ )
     {
         // this exception is okay, no formatting present...
     }

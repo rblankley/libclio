@@ -25,7 +25,7 @@
 #ifndef PATTERNLAYOUT_H
 #define PATTERNLAYOUT_H
 
-#include <layout.h>
+#include "../layout.h"
 
 #include <list>
 #include <string>
