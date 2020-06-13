@@ -25,6 +25,8 @@
 #ifndef HEXDUMP_H
 #define HEXDUMP_H
 
+#include "clioapi.h"
+
 /// Clio namespace.
 namespace clio
 {
@@ -32,7 +34,7 @@ namespace clio
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// Hex dump data class.
-class hexDumpInfo
+class CLIO_API hexDumpInfo
 {
     typedef hexDumpInfo _Myt;
 
