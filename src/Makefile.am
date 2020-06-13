@@ -25,6 +25,7 @@ nobase_otherinclude_HEADERS = \
 	appender.h \
 	hexdump.h \
 	clio.h \
+	clioapi.h \
 	logger.h \
 	loglevel.h \
 	logline.h \

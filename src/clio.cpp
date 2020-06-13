@@ -34,13 +34,13 @@ static constexpr const char *PACKAGE_VERSION = "1.0.0";
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-bool clioInit( const std::string& filename )
+bool CLIO_API clioInit( const std::string& filename )
 {
     return clio::loggerManager::instance()->configure( filename );
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-unsigned int clioGetRefeshInterval()
+unsigned int CLIO_API clioGetRefeshInterval()
 {
     const std::chrono::milliseconds interval(
         std::chrono::duration_cast<std::chrono::milliseconds>( clio::loggerManager::instance()->refreshInterval() ) );
@@ -49,19 +49,19 @@ unsigned int clioGetRefeshInterval()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-void clioSetRefeshInterval( unsigned int interval_ms )
+void CLIO_API clioSetRefeshInterval( unsigned int interval_ms )
 {
     clio::loggerManager::instance()->setRefreshInterval( std::chrono::milliseconds( interval_ms ) );
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-std::string clioGetVersion()
+std::string CLIO_API clioGetVersion()
 {
     return std::string( PACKAGE_VERSION );
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-void clioFinalize()
+void CLIO_API clioFinalize()
 {
     return clio::loggerManager::instance()->terminate();
 }

@@ -25,6 +25,7 @@
 #ifndef CLIO_H
 #define CLIO_H
 
+#include "clioapi.h"
 #include "hexdump.h"
 #include "logline.h"
 
@@ -38,7 +39,7 @@
  * @param[in] filename  config filename
  * @return  @c true on success, @c false otherwise
  */
-bool clioInit( const std::string& filename );
+bool CLIO_API clioInit( const std::string& filename );
 
 /// Retrieve refresh interval.
 /**
@@ -46,7 +47,7 @@ bool clioInit( const std::string& filename );
  * configuration file for changes and reload when this file changes.
  * @return  interval period in milliseconds
  */
-unsigned int clioGetRefeshInterval();
+unsigned int CLIO_API clioGetRefeshInterval();
 
 /// Set refresh interval.
 /**
@@ -54,16 +55,16 @@ unsigned int clioGetRefeshInterval();
  * configuration file for changes and reload when this file changes.
  * @param[in] interval_ms  interval period in milliseconds
  */
-void clioSetRefeshInterval( unsigned int interval_ms );
+void CLIO_API clioSetRefeshInterval( unsigned int interval_ms );
 
 /// Retrieve version of clio library.
 /**
  * @return  version string
  */
-std::string clioGetVersion();
+std::string CLIO_API clioGetVersion();
 
 /// Finalize clio library.
-void clioFinalize();
+void CLIO_API clioFinalize();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

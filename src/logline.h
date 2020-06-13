@@ -25,6 +25,7 @@
 #ifndef LOGLINE_H
 #define LOGLINE_H
 
+#include "clioapi.h"
 #include "hexdump.h"
 #include "logger.h"
 #include "loglevel.h"
@@ -34,6 +35,11 @@
 #include <string>
 #include <sstream>
 
+#if _WIN32
+#pragma warning( push )
+#pragma warning( disable: 4251 ) // disable warnings about STL interfaces
+#endif
+
 /// Clio namespace.
 namespace clio
 {
@@ -41,7 +47,7 @@ namespace clio
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// Log line data class.
-class logLine
+class CLIO_API logLine
 {
     typedef logLine _Myt;
 
@@ -386,6 +392,10 @@ logLine& operator << ( logLine&& lhs, const T& rhs )
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 } // namespace clio
+
+#if _WIN32
+#pragma warning( pop )
+#endif
 
 #endif // LOGLINE_H
 
