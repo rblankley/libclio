@@ -4,6 +4,7 @@ A lightweight c++ logging library.
 From Greek mythology Clio is the muse of history, a very fitting name for a logging library.
 
 ## Building
+### Linux
 
 You will need the following packages:
 ~~~~
@@ -23,6 +24,22 @@ $ autoreconf -vfi
 $ ./configure --host=arm-linux-gnueabihf
 $ make
 ~~~~
+
+You can also build a debian package if you would prefer. You will need the following packages:
+~~~~
+$ sudo apt-get install fakeroot devscripts dh-autoreconf
+~~~~
+
+Then you can build a dpkg directly:
+~~~~
+$ dpkg-buildpackage -uc -us
+~~~~
+
+### Windows
+
+Visual Studio projects and solutions are provided. Simply open them up and build.
+
+I use Visual Studio 2019 (the free one) and it works fine.
 
 ## Documentation
 
