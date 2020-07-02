@@ -92,7 +92,8 @@ std::string patternLayout::format( const logLine& line ) const
     // formats
     while ( findFormat( result, name, format ) )
     {
-        char value[512];
+        char value[4096];
+        char *valuep( nullptr );
 
         // validate format
         if ( !format.length() )
@@ -187,7 +188,17 @@ std::string patternLayout::format( const logLine& line ) const
             std::snprintf( value, sizeof(value), format.c_str(), line.classFunction().c_str() );
 
         else if ( std::string::npos != name.find( "%message" ) )
-            std::snprintf( value, sizeof(value), format.c_str(), line.text().c_str() );
+        {
+            const size_t len( std::snprintf( nullptr, 0, format.c_str(), line.text().c_str() ) );
+
+            if ( len <= sizeof(value) )
+                std::snprintf( value, sizeof(value), format.c_str(), line.text().c_str() );
+            else
+            {
+                valuep = new char[len];
+                std::snprintf( valuep, len, format.c_str(), line.text().c_str() );
+            }
+        }
 
         else if ( std::string::npos != name.find( "%file" ) )
             std::snprintf( value, sizeof(value), format.c_str(), line.sourceFilename().c_str() );
@@ -207,7 +218,10 @@ std::string patternLayout::format( const logLine& line ) const
         std::string::size_type pos;
 
         while ( std::string::npos != (pos = result.find( name )) )
-            result.replace( pos, name.size(), value );
+            result.replace( pos, name.size(), valuep ? valuep : value );
+
+        if ( valuep )
+            delete [] valuep;
     }
 
     return result;
